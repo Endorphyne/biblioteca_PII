@@ -1,0 +1,130 @@
+/* Fondo de la aplicación */
+QWidget {
+    background-color: #f5f0e1;
+    font-family: "Georgia", serif;
+    font-size: 14px;
+    color: #4b3f36;
+}
+
+/* Botones */
+QPushButton {
+    background-color: #d4a373;
+    color: #fff;
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-weight: bold;
+}
+QPushButton:hover {
+    background-color: #c78b5b;
+}
+QPushButton:pressed {
+    background-color: #b2794c;
+    padding-left: 8px;
+    padding-top: 6px;
+}
+
+/* Botones específicos para "Agregar", "Modificar", "Eliminar", y "Estadísticas" */
+QPushButton#add_button {
+    background-color: #a7c957;
+}
+QPushButton#edit_button {
+    background-color: #f4a261;
+}
+QPushButton#delete_button {
+    background-color: #e76f51;
+}
+QPushButton#stats_button {
+    background-color: #2a9d8f;
+}
+QPushButton#add_button:hover {
+    background-color: #8db04f;
+}
+QPushButton#edit_button:hover {
+    background-color: #de8f41;
+}
+QPushButton#delete_button:hover {
+    background-color: #d45c47;
+}
+QPushButton#stats_button:hover {
+    background-color: #258080;
+}
+
+/* QTableWidget */
+QTableWidget {
+    background-color: #ffffff;
+    alternate-background-color: #f0e5d8; /* Color para filas impares */
+    gridline-color: #d4a373;
+    border: 1px solid #d4a373;
+}
+QTableWidget::item {
+    padding: 6px;
+    border: none;
+}
+QTableWidget::item:selected {
+    background-color: #c78b5b;
+    color: #fff;
+}
+QHeaderView::section {
+    background-color: #d4a373;
+    color: #fff;
+    font-weight: bold;
+    padding: 4px;
+    border: none;
+}
+
+/* TabWidget */
+QTabWidget::pane {
+    border: 1px solid #d4a373;
+    background-color: #f5f0e1;
+}
+QTabBar::tab {
+    background-color: #d4a373;
+    color: #fff;
+    padding: 6px 12px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    font-weight: bold;
+    font-size: 12px; /* Reduce el tamaño de fuente para evitar solapamiento */
+}
+QTabBar::tab:selected {
+    background-color: #c78b5b;
+    color: #fff;
+}
+QTabBar::tab:hover {
+    background-color: #b2794c;
+}
+
+/* QLineEdit (Entradas de texto) */
+QLineEdit {
+    background-color: #fff;
+    border: 1px solid #d4a373;
+    padding: 4px;
+    border-radius: 4px;
+}
+QLineEdit:focus {
+    border: 1px solid #a7c957;
+}
+
+/* Etiquetas */
+QLabel {
+    color: #4b3f36;
+}
+
+/* Formulario */
+QFormLayout QLabel {
+    font-weight: bold;
+}
+
+/* QStackedWidget */
+QStackedWidget {
+    background-color: #f5f0e1;
+}
+QDoubleSpinBox {
+    background-color: #fff;
+    border: 1px solid #d4a373;
+    padding: 4px;
+    border-radius: 4px;
+}
+QDoubleSpinBox:focus {
+    border: 1px solid #a7c957;
+}

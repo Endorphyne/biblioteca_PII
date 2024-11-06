@@ -1,0 +1,4 @@
+my_venv/*
+__pycache__/*
+utils.py
+.vscode/settings.json
