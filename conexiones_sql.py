@@ -2,7 +2,6 @@ from mysql.connector import MySQLConnection, Error
 import configparser
 import bcrypt
 
-
 class Database:
     def __init__(self, config_file, section='biblioteca'):
         self.connection = None
@@ -100,14 +99,20 @@ class Database:
 
 
 # Uso de la clase con un archivo de configuración de cualquier nombre
-# db = Database('config.ini','biblioteca')  # Puede ser cualquier archivo .ini con la estructura adecuada
-# db.connect()
+db = Database('config.ini','biblioteca')  # Puede ser cualquier archivo .ini con la estructura adecuada
+db.connect()
 
 # # Realizar una consulta
 # resultados = db.execute_query("SELECT * FROM categoria_producto")#INSERTAR CONSULTA
 # if resultados:
 #     for fila in resultados:
 #         print(fila)
+data = db.execute_query("SELECT * FROM usuarios")
+
+for x in data:
+    print(x)
+
+
 
 # # try:
 #     db.execute_query("INSERT INTO producto(nombre,descripcion,precio_unitario,precio_mayorista,alerta_stock,stock_actual,idcategoria) VALUES (%s,%s,%s,%s,%s,%s,%s)",('terere', 'tremendo refrescante natural', 10, 5, 10, 900, 2)) #Esto funciona para insertar un valor a la DB
@@ -115,4 +120,4 @@ class Database:
 #     print("eror")
 # print(db.execute_query("SELECT * FROM clientes"))
 # Cerrar la conexión
-# db.close()
+db.close()
