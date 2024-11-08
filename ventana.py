@@ -205,6 +205,7 @@ class MainApp(QMainWindow):
 
         except Exception as e:
             print(f"Error al actualizar la tabla {table_name}: {e}")
+#Apartado estadisticas
 class estadisticas_clientes(QDialog):
     def __init__(self):
         super().__init__()
@@ -376,7 +377,7 @@ class estadisticas_reservas(QDialog):
         self.table_widget.setItem(0, 0, QTableWidgetItem("Canceladas"))
         self.table_widget.setItem(0, 1, QTableWidgetItem(str(reservas_canceladas)))
 
-#Formularios para carga
+#Apartado Formularios
 class formulario_user(QWidget):
     def __init__(self, titulo="Formulario"):
         super().__init__()
@@ -659,7 +660,7 @@ class formulario_reserva(QWidget):
         db.execute_query("INSERT INTO reservas (fecha_solicitud,estados_reservas_id,libros_id,usuarios_id) VALUES (%s,%s,%s,%s)",values)
         self.close()
 
-#Formularios para modificacion
+#Apartados Formularios mod
 class formulario_user_mod(QWidget):
     def __init__(self,mainApp, titulo="Formulario"):
         super().__init__()
