@@ -63,32 +63,44 @@ class Database:
             print("La conexión no está establecida.")
             return None
         
-    def check_user(self, usuario:str,contra:str) -> bool:
+    def check_user(self, usuario: str, contra: str) -> bool:
         '''
-        Obtiene el usuario recibido y revisa la contraseña recibida comparandola con la almacenada en la DB y devuelve un valor booleano
+        Obtiene el usuario recibido y revisa la contraseña recibida comparándola con la almacenada en la DB.
+        Devuelve True si las contraseñas coinciden, de lo contrario devuelve False.
         '''
         flag = False
-        #conexion con la base de datos desempaquetando el config
-        #cursor para ejecutar las consultas SQL
         try:
-            resultado = self.cursor.execute("SELECT usser_id FROM usuarios WHERE usuario = %s",(usuario,))
+            # Realizar la consulta para obtener el ID del usuario por nombre
+            resultado = self.execute_query("SELECT id FROM usuarios WHERE nombre = %s", (usuario,))
+
+            # Verificar si el usuario existe
             if resultado:
-                id_usuario = resultado[0]
-                #obtener contraseña
-                resultado = self.cursor.execute("SELECT password FROM usuarios WHERE usser_id = %s",(id_usuario,))
+                id_usuario = resultado[0][0]  # Obtener el ID del usuario
+
+                # Realizar la consulta para obtener la contraseña hasheada del usuario
+                resultado = self.execute_query("SELECT password FROM usuarios WHERE id = %s", (id_usuario,))
+                
+                # Verificar si la contraseña existe
                 if resultado:
-                    passw_hasheada = resultado[0]
-                    #validar la contraseña
-                    if bcrypt.checkpw(contra.encode('utf-8'),passw_hasheada.encode('utf-8')):
-                        flag = True
+                    passw_hasheada = resultado[0][0]  # Obtener la contraseña hasheada de la DB
+                    
+                    # Comparar la contraseña proporcionada con la hasheada en la DB
+                    if bcrypt.checkpw(contra.encode('utf-8'), passw_hasheada.encode('utf-8')):
+                        flag = True  # Las contraseñas coinciden
                     else:
-                        print("Datos erroneos")
+                        print("Contraseña incorrecta")
+                else:
+                    print("Contraseña no encontrada")
+            else:
+                print("Usuario no encontrado")
         except Error as err:
             print(f"Error: {err}")
         finally:
             return flag
-
-
+    
+    @staticmethod
+    def hashear(contra:str)->str:
+        return bcrypt.hashpw(contra.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
     def close(self):
         """Cierra el cursor y la conexión."""
         if self.cursor:
@@ -107,11 +119,8 @@ db.connect()
 # if resultados:
 #     for fila in resultados:
 #         print(fila)
-data = db.execute_query("SELECT * FROM usuarios")
 
-for x in data:
-    print(x)
-
+print(db.check_user("admin","admin"))
 
 
 # # try:

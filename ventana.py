@@ -6,6 +6,7 @@ from datetime import datetime
 #conexion con la db
 db = db('config.ini','biblioteca')
 db.connect()
+
 #Apartado login
 class LoginWindow(QWidget):
     def __init__(self):
@@ -29,9 +30,13 @@ class LoginWindow(QWidget):
         self.setLayout(layout)
 
     def login(self):
-        self.main_window = MainApp()
-        self.main_window.show()
-        self.close()
+        password = self.password_input.text()
+        if db.check_user(self.username_input.text(),password):
+            self.main_window = MainApp()
+            self.main_window.show()
+            self.close()
+        else:
+            QMessageBox.warning(self,"ADVERTENCIA","Usuario y/o contraseña incorrectos",QMessageBox.Ok)
 
 
 #Apartado de ventana
@@ -421,7 +426,8 @@ class formulario_user(QWidget):
         
     def guardar_usuario(self):
         if self.comprobrar_campos():
-            values = (self.campo1.text(),self.campo2.text(),datetime.now())
+            
+            values = (self.campo1.text(),db.hashear(self.campo2.text()),datetime.now())
             db.execute_query('INSERT INTO usuarios(nombre,password,fecha_creacion) VALUES (%s,%s,%s)',values)
             self.close()
 
