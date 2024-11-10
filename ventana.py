@@ -72,7 +72,6 @@ class MainApp(QMainWindow):
         tab = QWidget()
         tab_layout = QVBoxLayout(tab)
 
-
         table = QTableWidget(0, len(column_names))
         table.setHorizontalHeaderLabels(column_names)
         table.setAlternatingRowColors(True)
@@ -393,7 +392,9 @@ class formulario_user(QWidget):
         # Campos del formulario
         self.campo1 = QLineEdit()
         self.campo2 = QLineEdit()
+        self.campo2.setEchoMode(QLineEdit.Password)
         self.campo3 = QLineEdit()
+        self.campo3.setEchoMode(QLineEdit.Password)
         
         # Añadir campos al layout del formulario
         self.form_layout.addRow("Nombre :", self.campo1)
@@ -448,10 +449,15 @@ class formulario_cliente(QWidget):
         self.campo1 = QLineEdit()
         self.campo2 = QLineEdit()
         self.campo3 = QLineEdit()
-        self.campo4 = QLineEdit()
+        self.campo3.setInputMask("########")
+        self.campo4 = QDateEdit()
+        self.campo4.setCalendarPopup(True)
         self.campo5 = QLineEdit()
         self.campo6 = QLineEdit()
+        self.campo6.setInputMask("####-######")
         self.campo7 = QSpinBox()
+        self.campo7.setMinimum(1)
+        self.campo7.setMaximum(db.execute_query("SELECT COUNT(*) FROM usuarios")[0][0])
         
         # Añadir campos al layout del formulario
         self.form_layout.addRow("Nombre :", self.campo1)
@@ -479,7 +485,7 @@ class formulario_cliente(QWidget):
         self.save_button.clicked.connect(lambda: self.guardar_cliente())
         self.cancel_button.clicked.connect(lambda: self.close())
     def guardar_cliente(self):
-        values = (self.campo1.text(),self.campo2.text(),self.campo3.text(),self.campo4.text(),self.campo5.text(),datetime.now(),self.campo6.text(),self.campo7.value())
+        values = (self.campo1.text(),self.campo2.text(),self.campo3.text(),self.campo4.date().toPyDate(),self.campo5.text(),datetime.now(),self.campo6.text(),self.campo7.value())
         print(values)
         db.execute_query('INSERT INTO clientes (nombre, apellido, documento, nacimiento, direccion, telefono, fecha_registro,usuarios_id) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)',values)
         self.close()
